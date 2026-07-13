@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yahtzee Scoring &amp; Strategy – Tips to Score Higher</title>
+    <meta
+      name="description"
+      content="How Yahtzee scoring works and the strategy behind it: securing the 35-point upper bonus, when to scratch, keeping the Yahtzee box open and playing the odds to score higher."
+    />
+    <link rel="canonical" href="https://noccer.github.io/yahtzee-scoresheet/scoring-strategy/" />
+    <meta name="theme-color" content="#059669" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎲</text></svg>"
+    />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Yahtzee Scoring & Strategy – Tips to Score Higher" />
+    <meta
+      property="og:description"
+      content="How Yahtzee scoring works and the strategy behind it: the upper bonus, when to scratch, and playing the odds."
+    />
+    <meta property="og:url" content="https://noccer.github.io/yahtzee-scoresheet/scoring-strategy/" />
+    <meta name="twitter:card" content="summary" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do you get the bonus in Yahtzee?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Score 63 or more across the upper section and you earn a 35-point bonus. That is an average of three of each number, so aim to bank three of a number wherever you can." }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the Yahtzee bonus worth?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The first Yahtzee scores 50. Every additional Yahtzee rolled in the same game earns a further 100-point bonus, provided the Yahtzee box was scored rather than scratched." }
+          },
+          {
+            "@type": "Question",
+            "name": "When should you scratch a box in Yahtzee?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Scratch the box you are least likely to fill well. Early on, giving up Ones or a hard combination like Large Straight often costs less than wasting a high-value box." }
+          },
+          {
+            "@type": "Question",
+            "name": "What is a good Yahtzee score?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Around 200 to 250 is a solid game. Scores above 300 usually depend on rolling at least one Yahtzee and picking up the 35-point upper bonus." }
+          }
+        ]
+      }
+    </script>
+    <script>
+      try {
+        var t = JSON.parse(localStorage.getItem('yahtzee-scoresheet') || '{}');
+        var theme = t && t.state && t.state.theme;
+        if (theme === 'dark' || theme === 'light') document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {}
+    </script>
+    <style>
+      :root {
+        --bg: #f8fafc; --fg: #0f172a; --muted: #475569; --border: #e2e8f0;
+        --card: #ffffff; --accent: #047857; --accent-ink: #ffffff; --row: #f1f5f9;
+      }
+      :root[data-theme='light'] {
+        --bg: #f8fafc; --fg: #0f172a; --muted: #475569; --border: #e2e8f0;
+        --card: #ffffff; --accent: #047857; --accent-ink: #ffffff; --row: #f1f5f9;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #020617; --fg: #f1f5f9; --muted: #94a3b8; --border: #1e293b;
+          --card: #0f172a; --accent: #34d399; --accent-ink: #022c22; --row: #0f172a;
+        }
+      }
+      :root[data-theme='dark'] {
+        --bg: #020617; --fg: #f1f5f9; --muted: #94a3b8; --border: #1e293b;
+        --card: #0f172a; --accent: #34d399; --accent-ink: #022c22; --row: #0f172a;
+      }
+      * { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0; background: var(--bg); color: var(--fg);
+        font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.65; font-size: 1.0625rem;
+      }
+      .wrap { max-width: 44rem; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; }
+      header.site { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
+      header.site a.brand { font-weight: 800; font-size: 1.125rem; text-decoration: none; color: var(--fg); }
+      header.site a.brand span { color: var(--accent); }
+      h1 { font-size: 2rem; line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 0.75rem; }
+      h2 { font-size: 1.35rem; letter-spacing: -0.01em; margin: 2rem 0 0.5rem; }
+      h3 { font-size: 1.05rem; margin: 1.25rem 0 0.35rem; }
+      p, ul, ol { margin: 0 0 1rem; }
+      .lede { color: var(--muted); font-size: 1.15rem; }
+      a { color: var(--accent); }
+      strong { font-weight: 700; }
+      table { width: 100%; border-collapse: collapse; margin: 0 0 1rem; font-size: 0.98rem; }
+      caption { text-align: left; color: var(--muted); font-size: 0.9rem; padding-bottom: 0.4rem; }
+      th, td { text-align: left; padding: 0.5rem 0.6rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+      thead th { border-bottom: 2px solid var(--border); }
+      tbody tr:nth-child(odd) { background: var(--row); }
+      .table-scroll { overflow-x: auto; }
+      .cta {
+        display: inline-block; background: var(--accent); color: var(--accent-ink);
+        font-weight: 700; text-decoration: none; padding: 0.75rem 1.25rem;
+        border-radius: 0.75rem; margin: 0.5rem 0 1.5rem;
+      }
+      footer.site { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.95rem; }
+      footer.site nav { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.75rem; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="site">
+        <a class="brand" href="../">🎲 <span>Yahtzee</span> Score Sheet</a>
+      </header>
+
+      <main>
+        <h1>Yahtzee scoring and strategy</h1>
+        <p class="lede">
+          Yahtzee rewards patience as much as luck. Once you understand how the scoring works, a
+          few habits will lift your typical game by fifty points or more. Here is how the numbers
+          add up and where the smart plays are.
+        </p>
+
+        <a class="cta" href="../">Open the free score sheet</a>
+
+        <h2>How the scoring adds up</h2>
+        <p>
+          Your grand total comes from four parts: the upper section, the 35-point upper bonus, the
+          lower section, and any Yahtzee bonuses. New to the game? Start with our
+          <a href="../rules/">how to play Yahtzee guide</a>, then come back here.
+        </p>
+        <div class="table-scroll">
+          <table>
+            <caption>Where the points come from.</caption>
+            <thead>
+              <tr><th>Part</th><th>Typical contribution</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Upper section (Ones to Sixes)</td><td>Around 60 to 75</td></tr>
+              <tr><td>Upper bonus at 63+</td><td>35</td></tr>
+              <tr><td>Lower section combinations</td><td>Around 90 to 130</td></tr>
+              <tr><td>Yahtzee bonuses</td><td>100 each, if you are lucky</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Secure the 35-point bonus</h2>
+        <p>
+          The upper bonus is the single biggest swing you can plan for. You need <strong>63</strong>
+          across Ones to Sixes, which works out to three of each number on average. The maths is
+          forgiving: three of a high number buys room to fall short on a low one. Three sixes and
+          three fives alone are worth 33 of the 63, so chase the big numbers first and treat the
+          bonus as a target you are steadily banking, not an afterthought.
+        </p>
+
+        <h2>Keep the Yahtzee box open</h2>
+        <p>
+          The first Yahtzee scores 50, and every extra one is worth a 100-point bonus. Those
+          bonuses are the difference between a good game and a great one, so avoid scratching the
+          Yahtzee box early. If you are stuck for somewhere to put an awkward roll, there is almost
+          always a cheaper box to give up.
+        </p>
+
+        <h2>Know when to scratch</h2>
+        <p>
+          You cannot win every box, so losing one cheaply is a skill. A few rules of thumb:
+        </p>
+        <ul>
+          <li>
+            Sacrifice <strong>Ones</strong> before a bigger box. A scratched Ones costs you at most
+            five points; a scratched Sixes or Large Straight costs far more.
+          </li>
+          <li>
+            The <strong>straights</strong> are the hardest boxes to fill late, so fill or scratch
+            them while you still have rolls to spare.
+          </li>
+          <li>
+            <strong>Chance</strong> is your safety valve. Keep it for a turn where the dice give
+            you nothing else, and it will soak up a high roll for free.
+          </li>
+        </ul>
+
+        <h2>Play the odds</h2>
+        <p>
+          Three of a Kind and Four of a Kind score the total of all five dice, so they reward high
+          numbers, not just matches. When you have three of a kind and two rolls left, it is often
+          worth chasing the fourth die rather than settling. Small and Large Straights, by
+          contrast, pay a fixed 30 and 40, so once you have them, take them.
+        </p>
+
+        <h2>Let the score sheet do the arithmetic</h2>
+        <p>
+          Strategy is easier when you are not also adding up columns. Our
+          <a href="../">free online score sheet</a> offers only the legal scores for each box,
+          totals the sections automatically and flags the bonus the moment you reach 63, so you can
+          focus on the decisions that matter.
+        </p>
+
+        <a class="cta" href="../">Open the free score sheet</a>
+      </main>
+
+      <footer class="site">
+        <nav>
+          <a href="../">Score sheet</a>
+          <a href="../rules/">How to play</a>
+        </nav>
+        <p>A free online Yahtzee score sheet. No sign-up, no downloads, works on phone, tablet and desktop.</p>
+      </footer>
+    </div>
+  </body>
+</html>
